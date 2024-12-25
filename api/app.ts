@@ -2,8 +2,9 @@ import express from "express";
 const app = express();
 
 app.get("/health-check", (req, res) => {
-  res.json({
+  res.status(200).json({
     code: 200,
+    data: {},
     message: "Server running!",
   });
 });
