@@ -1,1 +1,1 @@
-# carbon_footprint_calculator
+# carbon-footprint-calculator
