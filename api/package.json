@@ -1,0 +1,8 @@
+{
+  "name": "carbon-footprint-calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://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@github.com/FabricioSalomon/carbon-footprint-calculator.git",
+  "author": "Fabricio Salomon <fabricio.salomon@grupoboticario.com.br>",
+  "license": "MIT"
+}
