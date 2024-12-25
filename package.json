@@ -1,0 +1,23 @@
+{
+  "name": "carbon-footprint-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/FabricioSalomon/carbon-footprint-calculator#readme",
+  "bugs": {
+    "url": "https://github.com/FabricioSalomon/carbon-footprint-calculator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/FabricioSalomon/carbon-footprint-calculator.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"yarn --cwd ./api dev\" \"yarn --cwd ./web dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
