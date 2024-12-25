@@ -4,5 +4,16 @@
   "main": "index.js",
   "repository": "https://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@github.com/FabricioSalomon/carbon-footprint-calculator.git",
   "author": "Fabricio Salomon <fabricio.salomon@grupoboticario.com.br>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "npx tsx --watch app.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
 }
