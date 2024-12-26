@@ -1,16 +1,17 @@
 "use client";
 
-import { ThemeProvider } from "styled-components";
-import { useState, useEffect } from "react";
-import { lightTheme, darkTheme, Theme } from "../theme";
-import GlobalStyle from "@/styles/globalStyle";
 import { Navbar } from "@/components/molecules";
+import GlobalStyle from "@/styles/globalStyle";
+import { useEffect, useState } from "react";
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, Theme } from "../theme";
 
 type RootLayoutProps = Readonly<{
   children: React.ReactNode;
 }>;
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const [isLoadingTheme, setIsLoadingTheme] = useState<boolean>(true);
   const [theme, setTheme] = useState<Theme>(lightTheme);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     } else {
       setTheme(lightTheme);
     }
+    setIsLoadingTheme(false);
   }, []);
 
   function toggleTheme() {
@@ -33,7 +35,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <ThemeProvider theme={theme}>
           <GlobalStyle theme={theme} />
-          <Navbar toggleTheme={toggleTheme} />
+          {isLoadingTheme ? null : (
+            <Navbar toggleTheme={toggleTheme} value={theme === darkTheme} />
+          )}
           <main>{children}</main>
         </ThemeProvider>
       </body>

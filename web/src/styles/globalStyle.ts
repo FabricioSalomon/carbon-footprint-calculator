@@ -13,24 +13,24 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   }
 
   body {
-    background-color: ${({ theme }) => theme.background};
-    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.colors.tertiaryBackground};
+    color: ${({ theme }) => theme.typography.colors.primary};
     font-family: 'Arial', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   a {
-    color: ${({ theme }) => theme.link};
+    color: ${({ theme }) => theme.colors.link};
     text-decoration: none;
   }
 
   a:hover {
-    color: ${({ theme }) => theme.linkHover};
+    color: ${({ theme }) => theme.colors.linkHover};
   }
 
   button {
-    background-color: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.tertiary};
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.tertiary};
     padding: 10px 20px;
     border: none;
     cursor: pointer;
@@ -39,19 +39,19 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   }
 
   button:hover {
-    background-color: ${({ theme }) => theme.hoverPrimary};
+    background-color: ${({ theme }) => theme.colors.hoverPrimary};
   }
 
   button:focus {
-    outline: 2px solid ${({ theme }) => theme.focusPrimary};
+    outline: 2px solid ${({ theme }) => theme.colors.focusPrimary};
   }
 
   .error {
-    color: ${({ theme }) => theme.error};
+    color: ${({ theme }) => theme.colors.error};
   }
 
   .success {
-    color: ${({ theme }) => theme.success};
+    color: ${({ theme }) => theme.colors.success};
   }
 `;
 

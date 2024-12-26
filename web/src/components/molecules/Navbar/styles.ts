@@ -1,26 +1,37 @@
+import { Form, Row, Switch } from "antd";
 import { styled } from "styled-components";
+
+export type CustomSwitchProps = {
+  checked?: boolean;
+};
 
 export const Nav = styled.nav`
   display: flex;
+  padding: 10px;
   justify-content: space-between;
-  padding: 20px;
-  background-color: ${({ theme }) => theme.secondary};
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.typography.colors.primary};
+  background-color: ${({ theme }) => theme.colors.secondaryBackground};
 `;
 
-export const ThemeToggleButton = styled.button`
-  background-color: ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.tertiary};
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+export const CustomForm = styled(Form)`
+  width: 100%;
+`;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.hoverPrimary};
-  }
+export const CustomRow = styled(Row)`
+  width: 100%;
+`;
 
-  &:focus {
-    outline: 2px solid ${({ theme }) => theme.focusPrimary};
+export const CustomFormItem = styled(Form.Item)`
+  margin: 0;
+  padding: 0;
+`;
+
+export const CustomSwitch = styled(Switch)<CustomSwitchProps>`
+  background: ${({ theme, checked }) =>
+    checked
+      ? theme.colors.primaryBackground
+      : theme.colors.tertiaryBackground} !important;
+  span {
+    color: ${({ theme }) => theme.typography.colors.primary} !important;
   }
 `;
