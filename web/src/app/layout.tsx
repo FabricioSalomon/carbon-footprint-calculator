@@ -42,6 +42,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en">
+      <head>
+        <title>Carbon Footprint</title>
+        <meta property="og:title" content="Carbon Footprint" key="title" />
+      </head>
       <body>
         {isLoadingTheme ? null : (
           <ThemeProvider theme={theme}>
