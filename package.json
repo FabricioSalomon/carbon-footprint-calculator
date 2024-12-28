@@ -15,7 +15,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"yarn --cwd ./api dev\" \"yarn --cwd ./web dev\""
+    "dev": "concurrently \"yarn --cwd ./api dev\" \"yarn --cwd ./web dev\"",
+    "serve": "concurrently \"yarn --cwd ./api dev\" \"yarn --cwd ./web serve\""
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
