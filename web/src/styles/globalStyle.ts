@@ -1,8 +1,8 @@
 import { createGlobalStyle } from "styled-components";
-import { Theme } from "../theme";
+import { CustomTheme } from "../theme";
 
 type GlobalStyleProps = {
-  theme: Theme;
+  theme: CustomTheme;
 };
 
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`

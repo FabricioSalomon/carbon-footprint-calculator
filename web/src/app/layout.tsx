@@ -4,7 +4,7 @@ import { Navbar } from "@/components/molecules";
 import GlobalStyle from "@/styles/globalStyle";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, Theme } from "../theme";
+import { darkTheme, lightTheme, CustomTheme } from "../theme";
 
 type RootLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -12,7 +12,7 @@ type RootLayoutProps = Readonly<{
 
 export default function RootLayout({ children }: RootLayoutProps) {
   const [isLoadingTheme, setIsLoadingTheme] = useState<boolean>(true);
-  const [theme, setTheme] = useState<Theme>(lightTheme);
+  const [theme, setTheme] = useState<CustomTheme>(lightTheme);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark";

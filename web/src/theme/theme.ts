@@ -4,9 +4,9 @@ import {
   textDarkColors,
   textLightColors,
 } from "./constants";
-import { Theme } from "./type";
+import { CustomTheme } from "./type";
 
-export const lightTheme: Theme = {
+export const lightTheme: CustomTheme = {
   colors: {
     primary: "#e8c57e",
     secondary: "#000000",
@@ -32,7 +32,7 @@ export const lightTheme: Theme = {
   },
 };
 
-export const darkTheme: Theme = {
+export const darkTheme: CustomTheme = {
   colors: {
     primary: "#e8c57e",
     secondary: "#ffffff",

@@ -1,8 +1,3 @@
-export type Theme = {
-  colors: Colors;
-  typography: Typography;
-};
-
 export type Colors = {
   primary: string;
   secondary: string;
@@ -45,4 +40,9 @@ export type Typography = {
   size: FontSize;
   weight: FontWeight;
   colors: FontColors;
+};
+
+export type CustomTheme = {
+  colors: Colors;
+  typography: Typography;
 };
