@@ -24,6 +24,7 @@ export function Navbar({ toggleTheme, value }: Readonly<NavbarProps>) {
   return (
     <Nav>
       <CustomForm
+        name="theme"
         form={form}
         initialValues={{
           theme: value,

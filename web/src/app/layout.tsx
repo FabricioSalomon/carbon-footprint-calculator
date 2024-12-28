@@ -33,13 +33,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle theme={theme} />
-          {isLoadingTheme ? null : (
-            <Navbar toggleTheme={toggleTheme} value={theme === darkTheme} />
-          )}
-          <main>{children}</main>
-        </ThemeProvider>
+        {isLoadingTheme ? null : (
+          <ThemeProvider theme={theme}>
+            <GlobalStyle theme={theme} />
+            <>
+              <Navbar toggleTheme={toggleTheme} value={theme === darkTheme} />
+              <main>{children}</main>
+            </>
+          </ThemeProvider>
+        )}
       </body>
     </html>
   );
