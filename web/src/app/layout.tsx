@@ -1,10 +1,11 @@
 "use client";
 
-import { Navbar } from "@/components/molecules";
+import { Footer, Navbar } from "@/components/molecules";
+import { AppProvider } from "@/context";
 import GlobalStyle from "@/styles/globalStyle";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, CustomTheme } from "../theme";
+import { CustomTheme, darkTheme, lightTheme } from "../theme";
 
 type RootLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -35,11 +36,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         {isLoadingTheme ? null : (
           <ThemeProvider theme={theme}>
-            <GlobalStyle theme={theme} />
-            <>
-              <Navbar toggleTheme={toggleTheme} value={theme === darkTheme} />
-              <main>{children}</main>
-            </>
+            <AppProvider>
+              <GlobalStyle theme={theme} />
+              <>
+                <Navbar toggleTheme={toggleTheme} value={theme === darkTheme} />
+                <main>{children}</main>
+                <Footer />
+              </>
+            </AppProvider>
           </ThemeProvider>
         )}
       </body>
