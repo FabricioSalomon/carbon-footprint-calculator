@@ -1,9 +1,5 @@
-import { Form, Row, Switch } from "antd";
+import { Form, Row } from "antd";
 import { styled } from "styled-components";
-
-export type CustomSwitchProps = {
-  checked?: boolean;
-};
 
 export const Nav = styled.nav`
   display: flex;
@@ -24,14 +20,4 @@ export const CustomRow = styled(Row)`
 export const CustomFormItem = styled(Form.Item)`
   margin: 0;
   padding: 0;
-`;
-
-export const CustomSwitch = styled(Switch)<CustomSwitchProps>`
-  background: ${({ theme, checked }) =>
-    checked
-      ? theme.colors.primaryBackground
-      : theme.colors.tertiaryBackground} !important;
-  span {
-    color: ${({ theme }) => theme.typography.colors.primary} !important;
-  }
 `;
