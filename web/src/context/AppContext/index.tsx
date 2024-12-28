@@ -1,6 +1,10 @@
+import { darkTheme } from "@/theme";
+import { ThemeEnum } from "@/types";
 import { ReactNode, createContext, useContext } from "react";
+import { useTheme } from "styled-components";
+import { Context, States } from "./types";
 
-interface AppContextProps {}
+interface AppContextProps extends Context {}
 
 interface AppProviderProps {
   children: ReactNode;
@@ -9,11 +13,13 @@ interface AppProviderProps {
 const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 export function AppProvider({ children }: Readonly<AppProviderProps>) {
-  const states = {
-    test: "",
+  const theme = useTheme();
+
+  const states: States = {
+    theme: theme === darkTheme ? ThemeEnum.DARK : ThemeEnum.LIGHT,
   };
 
-  const context = {
+  const context: Context = {
     ...states,
   };
 
