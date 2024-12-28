@@ -17,20 +17,26 @@ export type Colors = {
   success: string;
 };
 
-type FontSize = {
+export type FontSize = {
   title: string;
   subtitle: string;
   normal: string;
   small: string;
 };
 
-type FontWeight = {
+export type FontWeight = {
   normal: number;
   semiBold: number;
   bold: number;
 };
 
-type FontColors = {
+export type DefaultColors = {
+  red: string;
+  black: string;
+  white: string;
+};
+
+export type FontColors = DefaultColors & {
   primary: string;
   secondary: string;
   tertiary: string;
