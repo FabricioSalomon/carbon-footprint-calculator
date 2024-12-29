@@ -7,8 +7,9 @@ import { AppProvider } from "@/context";
 import { AppContainer } from "@/styles/app";
 import { FooterContainer } from "@/styles/footer";
 import GlobalStyle from "@/styles/globalStyle";
-import { ThemeEnum } from "@/types";
+import { PathToPageMap, ThemeEnum } from "@/types";
 import { Col, ConfigProvider } from "antd";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { CustomTheme, darkTheme, lightTheme } from "../theme";
@@ -18,8 +19,9 @@ type RootLayoutProps = Readonly<{
 }>;
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  const [isLoadingTheme, setIsLoadingTheme] = useState<boolean>(true);
+  const path = usePathname();
   const [theme, setTheme] = useState<CustomTheme>(lightTheme);
+  const [isLoadingTheme, setIsLoadingTheme] = useState<boolean>(true);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as ThemeEnum;
@@ -40,6 +42,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
     );
   }
 
+  const pathToPageMap: PathToPageMap = {
+    "/": 1,
+    "/form": 2,
+    "/profile": 3,
+  };
+
   return (
     <html lang="en">
       <head>
@@ -49,7 +57,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         {isLoadingTheme ? null : (
           <ThemeProvider theme={theme}>
-            <AppProvider>
+            <AppProvider page={pathToPageMap[path]}>
               <GlobalStyle theme={theme} />
               <ConfigProvider
                 theme={{

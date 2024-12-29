@@ -7,14 +7,15 @@ import { Context, Methods, States } from "./types";
 interface AppContextProps extends Context {}
 
 interface AppProviderProps {
+  page: number;
   children: ReactNode;
 }
 
 const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
-export function AppProvider({ children }: Readonly<AppProviderProps>) {
+export function AppProvider({ children, page }: Readonly<AppProviderProps>) {
   const theme = useTheme();
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(page);
 
   function handleSelectPage(page: number) {
     setCurrentPage(page);
