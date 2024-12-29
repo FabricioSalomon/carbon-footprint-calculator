@@ -43,9 +43,9 @@ export function Footer() {
           {pages.map(({ icon, key, url }) => (
             <Col key={key}>
               <CustomButton
-                onClick={() => handleClick(key, url)}
                 size="large"
                 icon={icon}
+                onClick={() => handleClick(key, url)}
                 hierarchy={key === currentPage ? "primary" : "secondary"}
               />
             </Col>
