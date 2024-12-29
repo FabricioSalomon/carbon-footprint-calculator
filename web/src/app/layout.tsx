@@ -8,7 +8,7 @@ import { AppContainer } from "@/styles/app";
 import { FooterContainer } from "@/styles/footer";
 import GlobalStyle from "@/styles/globalStyle";
 import { ThemeEnum } from "@/types";
-import { Col } from "antd";
+import { Col, ConfigProvider } from "antd";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { CustomTheme, darkTheme, lightTheme } from "../theme";
@@ -51,18 +51,28 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider theme={theme}>
             <AppProvider>
               <GlobalStyle theme={theme} />
-              <AppContainer>
-                <Col xs={24}>
-                  <Navbar
-                    toggleTheme={toggleTheme}
-                    value={theme === darkTheme}
-                  />
-                  <main>{children}</main>
-                </Col>
-                <FooterContainer xs={24}>
-                  <Footer />
-                </FooterContainer>
-              </AppContainer>
+              <ConfigProvider
+                theme={{
+                  token: {
+                    borderRadius: 5,
+                    colorLink: theme.colors.primary,
+                    colorPrimary: theme.colors.primary,
+                  },
+                }}
+              >
+                <AppContainer>
+                  <Col xs={24}>
+                    <Navbar
+                      toggleTheme={toggleTheme}
+                      value={theme === darkTheme}
+                    />
+                    <main>{children}</main>
+                  </Col>
+                  <FooterContainer xs={24}>
+                    <Footer />
+                  </FooterContainer>
+                </AppContainer>
+              </ConfigProvider>
             </AppProvider>
           </ThemeProvider>
         )}
