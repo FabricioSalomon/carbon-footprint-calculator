@@ -9,6 +9,10 @@ export type CustomStepsProps = {
 export const CustomSteps = styled(Steps)<CustomStepsProps>`
   .ant-steps-item {
     .ant-steps-item-container {
+      .ant-steps-icon {
+        cursor: pointer;
+      }
+
       .ant-steps-item-content {
         .ant-steps-item-title {
           &:after {

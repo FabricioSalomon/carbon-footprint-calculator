@@ -1,25 +1,28 @@
 import { useAppContext } from "@/context";
-import { Form } from "antd";
 import { defineSteps } from "./constants";
 import { CustomSteps } from "./styles";
 
-const { useFormInstance, useWatch } = Form;
+interface FormStepsProps {
+  currentStep: number;
+  onStepClick: (step: number) => void;
+}
 
-export function FormSteps() {
-  const form = useFormInstance();
+export function FormSteps({
+  currentStep,
+  onStepClick,
+}: Readonly<FormStepsProps>) {
   const { theme } = useAppContext();
-
-  const currentStep = useWatch(["currentStep"], form);
-
-  function handleStepClick(step: number): void {
-    form.setFieldValue(["currentStep"], step);
-  }
 
   return (
     <CustomSteps
       $theme={theme}
+      responsive={false}
       current={currentStep}
-      items={defineSteps({ currentStep, handleStepClick })}
+      direction="horizontal"
+      items={defineSteps({
+        currentStep,
+        handleStepClick: onStepClick,
+      })}
     />
   );
 }
