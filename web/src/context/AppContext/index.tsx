@@ -17,7 +17,7 @@ export function AppProvider({ children, page }: Readonly<AppProviderProps>) {
   const theme = useTheme();
   const [currentPage, setCurrentPage] = useState<number>(page);
 
-  function handleSelectPage(page: number) {
+  function handleSelectPage(page: number): void {
     setCurrentPage(page);
   }
 

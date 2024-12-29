@@ -33,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     setIsLoadingTheme(false);
   }, []);
 
-  function toggleTheme() {
+  function toggleTheme(): void {
     const newTheme = theme === lightTheme ? darkTheme : lightTheme;
     setTheme(newTheme);
     localStorage.setItem(
@@ -61,6 +61,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <GlobalStyle theme={theme} />
               <ConfigProvider
                 theme={{
+                  components: {
+                    Steps: {
+                      colorPrimary: theme.colors.primary,
+                    },
+                  },
                   token: {
                     fontSize: 16,
                     borderRadius: 5,
