@@ -15,7 +15,7 @@ export function Navbar({ toggleTheme, value }: Readonly<NavbarProps>) {
   const [form] = useForm();
   const { theme } = useAppContext();
 
-  function handleChangeTheme() {
+  function handleChangeTheme(): void {
     toggleTheme();
   }
 
