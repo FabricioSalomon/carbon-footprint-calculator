@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 export const FooterContainer = styled(Col)`
   bottom: 0;
+  padding: 0;
   width: 100%;
-  height: 100px;
-  padding: 1rem 0;
+  height: 60px;
   position: fixed;
 `;

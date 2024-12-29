@@ -15,7 +15,7 @@ export const fontWeight = {
 
 export const defaultColors: DefaultColors = {
   black: "#000000",
-  white: "#fffffff",
+  white: "#ffffff",
   red: "#ff0000",
 };
 
