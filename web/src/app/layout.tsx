@@ -66,6 +66,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     borderRadius: 5,
                     colorLink: theme.colors.primary,
                     colorPrimary: theme.colors.primary,
+                    colorText: theme.typography.colors.primary,
                   },
                 }}
               >
