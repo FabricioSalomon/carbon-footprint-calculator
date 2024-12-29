@@ -4,11 +4,11 @@ import "@ant-design/v5-patch-for-react-19";
 
 import { Footer, Navbar } from "@/components/molecules";
 import { AppProvider } from "@/context";
-import { AppContainer } from "@/styles/app";
+import { AppContainer, BodyContainer } from "@/styles/app";
 import { FooterContainer } from "@/styles/footer";
 import GlobalStyle from "@/styles/globalStyle";
 import { PathToPageMap, ThemeEnum } from "@/types";
-import { Col, ConfigProvider } from "antd";
+import { ConfigProvider } from "antd";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
@@ -71,13 +71,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 }}
               >
                 <AppContainer>
-                  <Col xs={24}>
+                  <BodyContainer xs={24}>
                     <Navbar
                       toggleTheme={toggleTheme}
                       value={theme === darkTheme}
                     />
                     <main>{children}</main>
-                  </Col>
+                  </BodyContainer>
                   <FooterContainer xs={24}>
                     <Footer />
                   </FooterContainer>
