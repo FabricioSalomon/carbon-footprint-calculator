@@ -1,8 +1,8 @@
 import { darkTheme } from "@/theme";
 import { ThemeEnum } from "@/types";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 import { useTheme } from "styled-components";
-import { Context, States } from "./types";
+import { Context, Methods, States } from "./types";
 
 interface AppContextProps extends Context {}
 
@@ -14,13 +14,24 @@ const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 export function AppProvider({ children }: Readonly<AppProviderProps>) {
   const theme = useTheme();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  function handleSelectPage(page: number) {
+    setCurrentPage(page);
+  }
 
   const states: States = {
+    currentPage,
     theme: theme === darkTheme ? ThemeEnum.DARK : ThemeEnum.LIGHT,
+  };
+
+  const methods: Methods = {
+    handleSelectPage,
   };
 
   const context: Context = {
     ...states,
+    ...methods,
   };
 
   return <AppContext value={context}>{children}</AppContext>;
