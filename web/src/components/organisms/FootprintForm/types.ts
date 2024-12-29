@@ -1,5 +1,6 @@
 import { FuelSourceEnum } from "@/types/dto";
 import { EGridSubRegionEnum } from "@/types/dto/EGridSubRegionEnum";
+import { ReactNode } from "react";
 
 export type Heat = {
   consumption: number;
@@ -18,4 +19,8 @@ export type Housing = {
 
 export type FootprintFormInitialValues = {
   housing: Housing;
+};
+
+export type StepToComponentMap = {
+  [key: number]: ReactNode;
 };
