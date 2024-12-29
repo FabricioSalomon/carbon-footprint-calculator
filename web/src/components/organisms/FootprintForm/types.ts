@@ -3,12 +3,12 @@ import { EGridSubRegionEnum } from "@/types/dto/EGridSubRegionEnum";
 
 export type Heat = {
   consumption: number;
-  fuel_source: FuelSourceEnum;
+  fuelSource: FuelSourceEnum;
 };
 
 export type Electricity = {
   consumption: number;
-  e_grid_subregion: EGridSubRegionEnum;
+  eGridSubRegion: EGridSubRegionEnum;
 };
 
 export type Housing = {

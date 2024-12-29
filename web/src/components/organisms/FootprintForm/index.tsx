@@ -1,14 +1,14 @@
 "use client";
 
-import { Col, Form, Row, Typography } from "antd";
-import { useTheme } from "styled-components";
+import { Title } from "@/components/atoms";
+import { Col, Form, Row } from "antd";
 import { FootprintFormInitialValues } from "./types";
+import { FormSteps } from "@/components/molecules";
 
 const { useForm } = Form;
 
 export function FootprintForm() {
   const [form] = useForm();
-  const { typography } = useTheme();
 
   const initialValues: FootprintFormInitialValues = {
     housing: {
@@ -19,20 +19,17 @@ export function FootprintForm() {
 
   return (
     <Row>
-      <Col xs={24}>
-        <Typography
-          style={{
-            fontSize: typography.size.title,
-            color: typography.colors.primary,
-          }}
-        >
-          Calculator
-        </Typography>
-      </Col>
-      <Col xs={24}></Col>
-      <Col xs={24}>
-        <Form name="footprint" form={form} initialValues={initialValues}></Form>
-      </Col>
+      <Form name="footprint" form={form} initialValues={initialValues}>
+        <Col xs={24}>
+          <Title>Calculator</Title>
+        </Col>
+        <Col xs={24}>
+          <Form.Item name={["currentStep"]} noStyle>
+            <FormSteps />
+          </Form.Item>
+        </Col>
+        <Col xs={24}></Col>
+      </Form>
     </Row>
   );
 }
