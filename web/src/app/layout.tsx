@@ -62,6 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <ConfigProvider
                 theme={{
                   token: {
+                    fontSize: 16,
                     borderRadius: 5,
                     colorLink: theme.colors.primary,
                     colorPrimary: theme.colors.primary,

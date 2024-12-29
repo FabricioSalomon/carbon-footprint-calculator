@@ -1,8 +1,8 @@
 import { DefaultColors, FontColors } from "./type";
 
 export const fontSize = {
-  title: "32px",
-  subtitle: "24px",
+  title: "34px",
+  subtitle: "28px",
   normal: "16px",
   small: "12px",
 };
