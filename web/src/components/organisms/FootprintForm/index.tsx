@@ -1,6 +1,6 @@
 "use client";
 
-import { Title } from "@/components/atoms";
+import { FormItem, Title } from "@/components/atoms";
 import {
   FormStepControlButtons,
   FormSteps,
@@ -56,14 +56,18 @@ export function FootprintForm() {
         eGridSubRegion: undefined,
         totalOutput: undefined,
       },
+      waste: {
+        consumption: undefined,
+        totalOutput: undefined,
+      },
     },
   };
 
   const stepToComponentMap: StepToComponentMap = {
     0: <HousingForm gotToNextStep={handleNextClick} />,
-    1: <></>,
-    2: <></>,
-    3: <></>,
+    // 1: <FoodForm />,
+    // 2: <TravelForm />,
+    // 3: <FootprintSummary>,
   };
 
   return (
@@ -88,7 +92,7 @@ export function FootprintForm() {
             <Col xs={24}>
               <Row justify="center" gutter={[0, 30]}>
                 <Col xs={24}>
-                  <Form.Item name={["currentStep"]} noStyle>
+                  <FormItem name={["currentStep"]} noStyle>
                     <FormSteps
                       current={currentStep}
                       items={defineSteps({
@@ -96,12 +100,12 @@ export function FootprintForm() {
                         handleStepClick,
                       })}
                     />
-                  </Form.Item>
+                  </FormItem>
                 </Col>
                 <Col xs={24}>
-                  <Form.Item name={["currentStep"]} noStyle>
+                  <FormItem name={["currentStep"]} noStyle>
                     {stepToComponentMap[currentStep]}
-                  </Form.Item>
+                  </FormItem>
                 </Col>
               </Row>
             </Col>
