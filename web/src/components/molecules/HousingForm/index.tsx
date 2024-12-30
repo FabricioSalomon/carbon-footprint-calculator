@@ -4,10 +4,13 @@ import {
   FormStepControlButtons,
   FormSteps,
   HeatForm,
+  HousingSummary,
+  WasteForm,
 } from "@/components/molecules";
-import { Col, Collapse, CollapseProps, Form, Row } from "antd";
+import { Col, CollapseProps, Form, Row } from "antd";
 import { useState } from "react";
 import { defineSubSteps, defineSubStepsSmallScreen } from "./constants";
+import { CustomCollapse } from "./styles";
 import { SubStepToComponentMap } from "./types";
 
 interface HousingFormProps {
@@ -58,13 +61,15 @@ export function HousingForm({ gotToNextStep }: Readonly<HousingFormProps>) {
   ];
 
   const subStepToComponentMap: SubStepToComponentMap = {
-    0: <Collapse items={items} bordered={false} expandIconPosition="end" />,
-    1: <></>,
-    2: <></>,
+    0: (
+      <CustomCollapse items={items} bordered={false} expandIconPosition="end" />
+    ),
+    1: <WasteForm />,
+    2: <HousingSummary />,
   };
 
   return (
-    <Row justify="center" gutter={[0, 16]}>
+    <Row justify="center" gutter={[0, 64]}>
       <Col xs={24}>
         <Row justify="center">
           <Col>

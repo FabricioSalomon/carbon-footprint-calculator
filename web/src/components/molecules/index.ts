@@ -4,4 +4,6 @@ export * from "./FormStepControlButtons";
 export * from "./FormSteps";
 export * from "./HeatForm";
 export * from "./HousingForm";
+export * from "./HousingSummary";
 export * from "./Navbar";
+export * from "./WasteForm";
