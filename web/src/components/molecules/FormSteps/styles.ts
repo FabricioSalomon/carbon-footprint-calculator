@@ -13,8 +13,20 @@ export const CustomSteps = styled(Steps)<CustomStepsProps>`
         cursor: pointer;
       }
 
+      .ant-steps-item-tail {
+        &:after {
+          background-color: ${({ $theme, theme }) =>
+            $theme === ThemeEnum.DARK
+              ? theme.typography.colors.white
+              : "#d6d6d6"};
+        }
+      }
+
       .ant-steps-item-content {
+        cursor: pointer;
         .ant-steps-item-title {
+          color: ${({ theme }) => theme.typography.colors.primary};
+
           &:after {
             background-color: ${({ $theme, theme }) =>
               $theme === ThemeEnum.DARK
@@ -25,6 +37,15 @@ export const CustomSteps = styled(Steps)<CustomStepsProps>`
       }
     }
   }
+
+  .ant-steps-item-wait {
+    .ant-steps-item-icon > .ant-steps-icon {
+      .ant-steps-icon-dot {
+        background: ${({ theme }) => theme.colors.secondary};
+      }
+    }
+  }
+
   .ant-steps-item-finish
     > .ant-steps-item-container
     > .ant-steps-item-content

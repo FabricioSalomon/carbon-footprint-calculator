@@ -1,28 +1,18 @@
 import { useAppContext } from "@/context";
-import { defineSteps } from "./constants";
 import { CustomSteps } from "./styles";
+import { StepsProps } from "antd";
 
-interface FormStepsProps {
-  currentStep: number;
-  onStepClick: (step: number) => void;
-}
+interface FormStepsProps extends StepsProps {}
 
-export function FormSteps({
-  currentStep,
-  onStepClick,
-}: Readonly<FormStepsProps>) {
+export function FormSteps({ ...props }: Readonly<FormStepsProps>) {
   const { theme } = useAppContext();
 
   return (
     <CustomSteps
+      {...props}
       $theme={theme}
       responsive={false}
-      current={currentStep}
       direction="horizontal"
-      items={defineSteps({
-        currentStep,
-        handleStepClick: onStepClick,
-      })}
     />
   );
 }
