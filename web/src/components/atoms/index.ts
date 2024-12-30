@@ -3,6 +3,7 @@ export * from "./CarIcon";
 export * from "./CircledStep";
 export * from "./CustomButton";
 export * from "./FoodIcon";
+export * from "./FormItem";
 export * from "./HousingIcon";
 export * from "./Label";
 export * from "./Subtitle";
