@@ -1,10 +1,13 @@
-import { FootprintFormFields, Heat } from "@/types";
-import { Col, Form, Input, InputNumber, Row, Select } from "antd";
+import { CustomButton, FormItem } from "@/components/atoms";
+import { FootprintFormFields, HeatFields } from "@/types";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Col, Form, Input, Row, Select } from "antd";
 import { NamePath } from "antd/es/form/interface";
 import { useState } from "react";
+import { Container, CustomCol, CustomInputNumber } from "./styles";
 
 interface HeatFormProps {
-  initialValue: Heat[];
+  initialValue: HeatFields[];
 }
 
 const { useFormInstance } = Form;
@@ -12,14 +15,14 @@ const baseFormItemName: NamePath = ["housing", "heat"];
 
 export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
   const form = useFormInstance<FootprintFormFields>();
-  const [heatInputs, setHeatInputs] = useState<Heat[]>(initialValue);
+  const [heatInputs, setHeatInputs] = useState<HeatFields[]>(initialValue);
 
   function handleFieldChange(
-    fieldName: keyof Heat,
+    fieldName: keyof HeatFields,
     value: string | number | null,
     index: number
   ): void {
-    const items: Heat[] = form.getFieldValue(baseFormItemName) || [];
+    const items: HeatFields[] = form.getFieldValue(baseFormItemName) || [];
 
     const currentItem = items[index];
     if (fieldName === "fuelSource") {
@@ -39,11 +42,7 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
       },
     });
 
-    if (
-      currentItem.fuelSource &&
-      currentItem.consumption !== undefined &&
-      index === items.length - 1
-    ) {
+    if (shouldAddNewEmptyInputs(currentItem, index, items)) {
       items.push({
         index: items.length,
         fuelSource: undefined,
@@ -60,41 +59,86 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
     }
   }
 
+  function shouldAddNewEmptyInputs(
+    currentItem: HeatFields,
+    index: number,
+    items: HeatFields[]
+  ): boolean {
+    return (
+      !!currentItem.fuelSource &&
+      currentItem.consumption !== undefined &&
+      index === items.length - 1
+    );
+  }
+
+  function handleRemoveInput(index: number): void {
+    const inputsCopy = [...heatInputs];
+    const indexToRemove = inputsCopy.findIndex(
+      (input) => input.index === index
+    );
+    if (indexToRemove >= 0) {
+      inputsCopy.splice(indexToRemove, 1);
+      const newInputs = inputsCopy.map((input, index) => ({
+        ...input,
+        index,
+      }));
+      setHeatInputs(newInputs);
+      form.setFieldsValue({
+        housing: {
+          heat: newInputs,
+        },
+      });
+    }
+  }
+
   return (
-    <Row justify="center">
-      {heatInputs?.map(({ index }: Heat) => (
+    <Row justify="center" gutter={[0, 16]}>
+      {heatInputs?.map(({ index }: HeatFields) => (
         <Col xs={24} key={index}>
-          <Row justify="center">
-            <Col xs={24}>
-              <Form.Item name={[...baseFormItemName, index, "fuelSource"]}>
-                <Select
-                  placeholder="Select an option"
-                  onChange={(value) =>
-                    handleFieldChange("fuelSource", value, index)
-                  }
-                  options={[{ value: "teste", title: "teste" }]}
+          <Container justify="space-between" align="middle">
+            <Col xs={20}>
+              <Row justify="center">
+                <Col xs={24}>
+                  <FormItem name={[...baseFormItemName, index, "fuelSource"]}>
+                    <Select
+                      placeholder="Select an fuel"
+                      onChange={(value) =>
+                        handleFieldChange("fuelSource", value, index)
+                      }
+                      options={[{ value: "teste", title: "teste" }]}
+                    />
+                  </FormItem>
+                </Col>
+              </Row>
+              <Row justify="space-between" gutter={[0, 16]}>
+                <CustomCol xs={24} md={12}>
+                  <FormItem name={[...baseFormItemName, index, "consumption"]}>
+                    <CustomInputNumber
+                      placeholder="Enter your consumption"
+                      onChange={(value) =>
+                        handleFieldChange("consumption", value, index)
+                      }
+                    />
+                  </FormItem>
+                </CustomCol>
+                <CustomCol xs={24} md={10}>
+                  <FormItem name={[...baseFormItemName, index, "totalOutput"]}>
+                    <Input disabled readOnly />
+                  </FormItem>
+                </CustomCol>
+              </Row>
+            </Col>
+            {index < heatInputs.length - 1 ? (
+              <Col>
+                <CustomButton
+                  danger
+                  hierarchy="tertiary"
+                  icon={<DeleteOutlined />}
+                  onClick={() => handleRemoveInput(index)}
                 />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row justify="space-between" gutter={[0, 16]}>
-            <Col xs={12}>
-              <Form.Item name={[...baseFormItemName, index, "consumption"]}>
-                <InputNumber
-                  placeholder="Enter a number"
-                  style={{ width: "100%" }}
-                  onChange={(value) =>
-                    handleFieldChange("consumption", value, index)
-                  }
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={10}>
-              <Form.Item name={[...baseFormItemName, index, "totalOutput"]}>
-                <Input disabled readOnly />
-              </Form.Item>
-            </Col>
-          </Row>
+              </Col>
+            ) : null}
+          </Container>
         </Col>
       ))}
     </Row>
