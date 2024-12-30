@@ -46,7 +46,7 @@ export function Footer() {
                 size="large"
                 icon={icon}
                 onClick={() => handleClick(key, url)}
-                hierarchy={key === currentPage ? "primary" : "secondary"}
+                hierarchy={key === currentPage ? "primary" : "tertiary"}
               />
             </Col>
           ))}
