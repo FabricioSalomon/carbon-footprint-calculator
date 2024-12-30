@@ -1,63 +1,66 @@
 "use client";
 
-import { Subtitle, Title } from "@/components/atoms";
-import { FormSteps } from "@/components/molecules";
-import { Col, Form, Row, Steps } from "antd";
+import { Title } from "@/components/atoms";
+import {
+  FormStepControlButtons,
+  FormSteps,
+  HousingForm,
+} from "@/components/molecules";
+import { FootprintFormFields } from "@/types";
+import { Col, Form, Row } from "antd";
 import { useState } from "react";
-import { FootprintFormInitialValues, StepToComponentMap } from "./types";
+import { defineSteps } from "./constants";
+import { StepToComponentMap } from "./types";
 
 const { useForm } = Form;
+
+const TOTAL_STEPS = 3;
 
 export function FootprintForm() {
   const [form] = useForm();
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   function handleStepClick(step: number): void {
-    if (step === currentStep) {
+    if (step === currentStep || step > TOTAL_STEPS) {
       return;
     }
     setCurrentStep(step);
   }
 
-  const initialValues: FootprintFormInitialValues = {
+  function handlePreviousClick(): void {
+    if (currentStep === 0) {
+      return;
+    }
+    setCurrentStep(currentStep - 1);
+  }
+
+  function handleNextClick(): void {
+    if (currentStep === 3) {
+      return;
+    }
+    setCurrentStep(currentStep + 1);
+  }
+
+  const initialValues: FootprintFormFields = {
     housing: {
-      heat: undefined,
-      electricity: undefined,
+      heat: [
+        {
+          index: 0,
+          consumption: undefined,
+          fuelSource: undefined,
+          totalOutput: undefined,
+        },
+      ],
+      electricity: {
+        consumption: undefined,
+        eGridSubRegion: undefined,
+        totalOutput: undefined,
+      },
     },
   };
 
   const stepToComponentMap: StepToComponentMap = {
-    0: (
-      <Row justify="center" gutter={[0, 16]}>
-        <Col xs={24}>
-          <Row justify="center">
-            <Col>
-              <Subtitle>Housing</Subtitle>
-            </Col>
-          </Row>
-        </Col>
-        <Col>
-          <Steps
-            progressDot
-            current={0}
-            items={[
-              {
-                title: "Energy",
-              },
-              {
-                title: "Waste",
-              },
-              {
-                title: "Summary",
-              },
-            ]}
-          />
-        </Col>
-        <Col xs={24}>
-          <>Form</>
-        </Col>
-      </Row>
-    ),
+    0: <HousingForm gotToNextStep={handleNextClick} />,
     1: <></>,
     2: <></>,
     3: <></>,
@@ -81,24 +84,36 @@ export function FootprintForm() {
             width: "100%",
           }}
         >
-          <Col xs={24}>
-            <Row justify="center" gutter={[0, 30]}>
-              <Col xs={24}>
-                <Form.Item name={["currentStep"]} noStyle>
-                  <FormSteps
-                    currentStep={currentStep}
-                    onStepClick={handleStepClick}
-                  />
-                </Form.Item>
-              </Col>
-              <Col xs={24}>
-                <Form.Item name={["currentStep"]} noStyle>
-                  {stepToComponentMap[currentStep]}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={24}></Col>
+          <Row justify="center">
+            <Col xs={24}>
+              <Row justify="center" gutter={[0, 30]}>
+                <Col xs={24}>
+                  <Form.Item name={["currentStep"]} noStyle>
+                    <FormSteps
+                      current={currentStep}
+                      items={defineSteps({
+                        currentStep,
+                        handleStepClick,
+                      })}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24}>
+                  <Form.Item name={["currentStep"]} noStyle>
+                    {stepToComponentMap[currentStep]}
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
+            {currentStep == 0 ? null : (
+              <FormStepControlButtons
+                onNextClick={handleNextClick}
+                onPreviousClick={handlePreviousClick}
+                disabledPreviousButton={currentStep == 0}
+                disabledNextButton={currentStep === TOTAL_STEPS}
+              />
+            )}
+          </Row>
         </Form>
       </Col>
     </Row>
