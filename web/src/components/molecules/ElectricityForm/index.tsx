@@ -1,5 +1,7 @@
-import { Col, Form, Input, InputNumber, Row, Select } from "antd";
+import { FormItem } from "@/components/atoms";
+import { Col, Input, Row, Select } from "antd";
 import { NamePath } from "antd/es/form/interface";
+import { CustomInputNumber } from "./styles";
 
 const baseFormItemName: NamePath = ["housing", "electricity"];
 
@@ -9,24 +11,24 @@ export function ElectricityForm() {
       <Col xs={24}>
         <Row justify="center">
           <Col xs={24}>
-            <Form.Item name={[...baseFormItemName, "eGridSubRegion"]}>
+            <FormItem name={[...baseFormItemName, "eGridSubRegion"]}>
               <Select
-                placeholder="Select an option"
+                placeholder="Select an electric grid"
                 options={[{ value: "teste", title: "teste" }]}
               />
-            </Form.Item>
+            </FormItem>
           </Col>
         </Row>
         <Row justify="space-between" gutter={[0, 16]}>
-          <Col xs={12}>
-            <Form.Item name={[...baseFormItemName, "consumption"]}>
-              <InputNumber placeholder="Enter a number" />
-            </Form.Item>
+          <Col xs={24} md={12}>
+            <FormItem name={[...baseFormItemName, "consumption"]}>
+              <CustomInputNumber placeholder="Enter your consumption" />
+            </FormItem>
           </Col>
-          <Col xs={10}>
-            <Form.Item name={[...baseFormItemName, "totalOutput"]}>
+          <Col xs={24} md={10}>
+            <FormItem name={[...baseFormItemName, "totalOutput"]}>
               <Input disabled readOnly />
-            </Form.Item>
+            </FormItem>
           </Col>
         </Row>
       </Col>
