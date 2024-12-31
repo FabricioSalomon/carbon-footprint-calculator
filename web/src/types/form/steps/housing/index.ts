@@ -41,14 +41,18 @@ export type FoodFields = Partial<Food>;
 
 export type Travel = {
   fuel: string;
+  index: number;
+  distance: number;
   consumption: number;
   totalOutput: number;
 };
 
-export type TravelFields = Partial<Travel>;
+export type TravelFields = Partial<Travel> & {
+  index: number;
+};
 
 export type FootprintFormFields = {
   housing: Housing;
   food: FoodFields;
-  travel: TravelFields;
+  travel: TravelFields[];
 };
