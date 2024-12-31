@@ -11,7 +11,10 @@ export function ElectricityForm() {
       <Col xs={24}>
         <Row justify="center">
           <Col xs={24}>
-            <FormItem name={[...baseFormItemName, "eGridSubRegion"]}>
+            <FormItem
+              label="Grid"
+              name={[...baseFormItemName, "eGridSubRegion"]}
+            >
               <Select
                 placeholder="Select an electric grid"
                 options={[{ value: "teste", title: "teste" }]}
@@ -21,12 +24,18 @@ export function ElectricityForm() {
         </Row>
         <Row justify="space-between" gutter={[0, 16]}>
           <Col xs={24} md={12}>
-            <FormItem name={[...baseFormItemName, "consumption"]}>
+            <FormItem
+              label="Consumption (kWh)"
+              name={[...baseFormItemName, "consumption"]}
+            >
               <CustomInputNumber placeholder="Enter your consumption" />
             </FormItem>
           </Col>
           <Col xs={24} md={10}>
-            <FormItem name={[...baseFormItemName, "totalOutput"]}>
+            <FormItem
+              label="Total (kgCO2e/yr)"
+              name={[...baseFormItemName, "totalOutput"]}
+            >
               <Input disabled readOnly />
             </FormItem>
           </Col>

@@ -96,12 +96,15 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
       {heatInputs?.map(({ index }: HeatFields) => (
         <Col xs={24} key={index}>
           <Container justify="space-between" align="middle">
-            <Col xs={20}>
+            <Col xs={heatInputs.length === 1 ? 24 : 20}>
               <Row justify="center">
                 <Col xs={24}>
-                  <FormItem name={[...baseFormItemName, index, "fuelSource"]}>
+                  <FormItem
+                    label="Fuel"
+                    name={[...baseFormItemName, index, "fuelSource"]}
+                  >
                     <Select
-                      placeholder="Select an fuel"
+                      placeholder="Select a fuel"
                       onChange={(value) =>
                         handleFieldChange("fuelSource", value, index)
                       }
@@ -112,7 +115,10 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
               </Row>
               <Row justify="space-between" gutter={[0, 16]}>
                 <CustomCol xs={24} md={12}>
-                  <FormItem name={[...baseFormItemName, index, "consumption"]}>
+                  <FormItem
+                    label="Consumption (therms)"
+                    name={[...baseFormItemName, index, "consumption"]}
+                  >
                     <CustomInputNumber
                       placeholder="Enter your consumption"
                       onChange={(value) =>
@@ -122,7 +128,10 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
                   </FormItem>
                 </CustomCol>
                 <CustomCol xs={24} md={10}>
-                  <FormItem name={[...baseFormItemName, index, "totalOutput"]}>
+                  <FormItem
+                    label="Total (kgCO2e/yr)"
+                    name={[...baseFormItemName, index, "totalOutput"]}
+                  >
                     <Input disabled readOnly />
                   </FormItem>
                 </CustomCol>

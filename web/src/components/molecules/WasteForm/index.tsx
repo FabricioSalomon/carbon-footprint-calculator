@@ -11,12 +11,18 @@ export function WasteForm() {
       <Col xs={24}>
         <Row justify="space-between" gutter={[0, 16]}>
           <Col xs={24} md={12}>
-            <FormItem name={[...baseFormItemName, "consumption"]}>
+            <FormItem
+              label="Production (lb)"
+              name={[...baseFormItemName, "consumption"]}
+            >
               <CustomInputNumber placeholder="Enter your consumption" />
             </FormItem>
           </Col>
           <Col xs={24} md={10}>
-            <FormItem name={[...baseFormItemName, "totalOutput"]}>
+            <FormItem
+              label="Total (kgCO2e/yr)"
+              name={[...baseFormItemName, "totalOutput"]}
+            >
               <Input disabled readOnly />
             </FormItem>
           </Col>

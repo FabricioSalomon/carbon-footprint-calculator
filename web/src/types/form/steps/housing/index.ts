@@ -5,7 +5,9 @@ export type Heat = {
   totalOutput: number;
 };
 
-export type HeatFields = Partial<Heat>;
+export type HeatFields = Partial<Heat> & {
+  index: number;
+};
 
 export type Electricity = {
   consumption: number;
@@ -28,6 +30,25 @@ export type Housing = {
   waste?: WasteFields;
 };
 
+export type Food = {
+  food: string;
+  serving: string;
+  consumption: number;
+  totalOutput: number;
+};
+
+export type FoodFields = Partial<Food>;
+
+export type Travel = {
+  fuel: string;
+  consumption: number;
+  totalOutput: number;
+};
+
+export type TravelFields = Partial<Travel>;
+
 export type FootprintFormFields = {
   housing: Housing;
+  food: FoodFields;
+  travel: TravelFields;
 };
