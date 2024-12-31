@@ -7,7 +7,8 @@ import {
   HousingSummary,
   WasteForm,
 } from "@/components/molecules";
-import { Col, CollapseProps, Form, Row } from "antd";
+import { useFootprintForm } from "@/context";
+import { Col, CollapseProps, Row } from "antd";
 import { useState } from "react";
 import { defineSubSteps, defineSubStepsSmallScreen } from "./constants";
 import { CustomCollapse } from "./styles";
@@ -18,10 +19,9 @@ interface HousingFormProps {
 }
 
 const TOTAL_SUB_STEPS = 2;
-const { useFormInstance } = Form;
 
 export function HousingForm({ gotToNextStep }: Readonly<HousingFormProps>) {
-  const form = useFormInstance();
+  const form = useFootprintForm();
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   function handleSubStepClick(step: number): void {

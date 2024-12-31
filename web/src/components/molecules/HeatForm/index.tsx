@@ -1,7 +1,8 @@
 import { CustomButton, FormItem } from "@/components/atoms";
-import { FootprintFormFields, HeatFields } from "@/types";
+import { useFootprintForm } from "@/context";
+import { HeatFields } from "@/types";
 import { DeleteOutlined } from "@ant-design/icons";
-import { Col, Form, Input, Row, Select } from "antd";
+import { Col, Input, Row, Select } from "antd";
 import { NamePath } from "antd/es/form/interface";
 import { useState } from "react";
 import { Container, CustomCol, CustomInputNumber } from "./styles";
@@ -10,11 +11,10 @@ interface HeatFormProps {
   initialValue: HeatFields[];
 }
 
-const { useFormInstance } = Form;
 const baseFormItemName: NamePath = ["housing", "heat"];
 
 export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
-  const form = useFormInstance<FootprintFormFields>();
+  const form = useFootprintForm();
   const [heatInputs, setHeatInputs] = useState<HeatFields[]>(initialValue);
 
   function handleFieldChange(

@@ -20,7 +20,7 @@ const { useForm } = Form;
 const TOTAL_STEPS = 3;
 
 export function FootprintForm() {
-  const [form] = useForm();
+  const [form] = useForm<FootprintFormFields>();
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   function handleStepClick(step: number): void {
@@ -70,17 +70,21 @@ export function FootprintForm() {
       serving: undefined,
       totalOutput: undefined,
     },
-    travel: {
-      fuel: undefined,
-      consumption: undefined,
-      totalOutput: undefined,
-    },
+    travel: [
+      {
+        index: 0,
+        fuel: undefined,
+        distance: undefined,
+        consumption: undefined,
+        totalOutput: undefined,
+      },
+    ],
   };
 
   const stepToComponentMap: StepToComponentMap = {
     0: <HousingForm gotToNextStep={handleNextClick} />,
     1: <FoodForm />,
-    2: <TravelForm />,
+    2: <TravelForm initialValue={form.getFieldValue(["travel"])} />,
     3: <FootprintSummary />,
   };
 
