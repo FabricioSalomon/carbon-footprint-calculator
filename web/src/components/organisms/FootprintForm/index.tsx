@@ -2,9 +2,12 @@
 
 import { FormItem, Title } from "@/components/atoms";
 import {
+  FoodForm,
+  FootprintSummary,
   FormStepControlButtons,
   FormSteps,
   HousingForm,
+  TravelForm,
 } from "@/components/molecules";
 import { FootprintFormFields } from "@/types";
 import { Col, Form, Row } from "antd";
@@ -61,13 +64,24 @@ export function FootprintForm() {
         totalOutput: undefined,
       },
     },
+    food: {
+      food: undefined,
+      consumption: undefined,
+      serving: undefined,
+      totalOutput: undefined,
+    },
+    travel: {
+      fuel: undefined,
+      consumption: undefined,
+      totalOutput: undefined,
+    },
   };
 
   const stepToComponentMap: StepToComponentMap = {
     0: <HousingForm gotToNextStep={handleNextClick} />,
-    // 1: <FoodForm />,
-    // 2: <TravelForm />,
-    // 3: <FootprintSummary>,
+    1: <FoodForm />,
+    2: <TravelForm />,
+    3: <FootprintSummary />,
   };
 
   return (
