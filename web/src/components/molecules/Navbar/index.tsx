@@ -1,8 +1,6 @@
 import { AppLogo, SwitchButton } from "@/components/atoms";
-import { useAppContext } from "@/context";
 import { Col, Form } from "antd";
 import { CustomForm, CustomFormItem, CustomRow, Nav } from "./styles";
-import { ThemeEnum } from "@/types";
 
 interface NavbarProps {
   value: boolean;
@@ -13,7 +11,6 @@ const { useForm } = Form;
 
 export function Navbar({ toggleTheme, value }: Readonly<NavbarProps>) {
   const [form] = useForm();
-  const { theme } = useAppContext();
 
   function handleChangeTheme(): void {
     toggleTheme();
@@ -21,10 +18,13 @@ export function Navbar({ toggleTheme, value }: Readonly<NavbarProps>) {
 
   return (
     <Nav>
-      <Col xs={2}>
-        <AppLogo
-          theme={theme == ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK}
-        />
+      <Col
+        xs={2}
+        style={{
+          maxWidth: "70px",
+        }}
+      >
+        <AppLogo />
       </Col>
       <CustomForm
         name="theme"

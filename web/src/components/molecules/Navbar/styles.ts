@@ -6,9 +6,9 @@ export const Nav = styled.nav`
   display: flex;
   padding: 10px;
   align-items: center;
+  background-color: #000000;
   justify-content: space-between;
   color: ${({ theme }) => theme.typography.colors.primary};
-  background-color: ${({ theme }) => theme.colors.secondaryBackground};
 `;
 
 export const CustomForm = styled(Form)`

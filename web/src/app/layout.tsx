@@ -65,6 +65,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     Steps: {
                       colorPrimary: theme.colors.primary,
                     },
+                    Select: {
+                      colorText: theme.typography.colors.black,
+                    },
+                    Input: {
+                      colorText: theme.typography.colors.black,
+                    },
+                    InputNumber: {
+                      colorText: theme.typography.colors.black,
+                    },
                   },
                   token: {
                     fontSize: 16,
