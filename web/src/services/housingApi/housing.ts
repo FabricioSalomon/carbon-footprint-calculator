@@ -13,21 +13,21 @@ import type {
 type HousingResponse<T> = ApiResponse<T, BaseErrorResponse>;
 
 interface IHousingApiService {
-  getAllHeatFuelSources: () => Promise<
+  getAllHeatFuelSources(): Promise<
     HousingResponse<GetAllHeatFuelSourcesResponse>
   >;
-  getAllSubRegionGrids: () => Promise<
+  getAllSubRegionGrids(): Promise<
     HousingResponse<GetAllSubRegionGridsResponse>
   >;
-  calculateHeatTotalOutput: (
+  calculateHeatTotalOutput(
     payload: CalculateHeatTotalOutputRequest
-  ) => Promise<HousingResponse<CalculateTotalOutputResponse>>;
-  calculateElectricityTotalOutput: (
+  ): Promise<HousingResponse<CalculateTotalOutputResponse>>;
+  calculateElectricityTotalOutput(
     payload: CalculateElectricityTotalOutputRequest
-  ) => Promise<HousingResponse<CalculateTotalOutputResponse>>;
-  calculateWasteTotalOutput: (
+  ): Promise<HousingResponse<CalculateTotalOutputResponse>>;
+  calculateWasteTotalOutput(
     payload: CalculateWasteTotalOutputRequest
-  ) => Promise<HousingResponse<CalculateTotalOutputResponse>>;
+  ): Promise<HousingResponse<CalculateTotalOutputResponse>>;
 }
 
 export class HousingApiService implements IHousingApiService {

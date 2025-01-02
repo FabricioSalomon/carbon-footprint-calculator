@@ -4,12 +4,12 @@ import type { CalculateTravelTotalOutputRequest } from "./types/request";
 import type { GetAllMotorFuelSourcesResponse } from "./types/response";
 
 interface ITravelApiService {
-  getAllMotorFuelSources: () => Promise<
+  getAllMotorFuelSources(): Promise<
     ApiResponse<GetAllMotorFuelSourcesResponse, BaseErrorResponse>
   >;
-  calculateTravelTotalOutput: (
+  calculateTravelTotalOutput(
     payload: CalculateTravelTotalOutputRequest
-  ) => Promise<ApiResponse<CalculateTotalOutputResponse, BaseErrorResponse>>;
+  ): Promise<ApiResponse<CalculateTotalOutputResponse, BaseErrorResponse>>;
 }
 
 export class TravelApiService implements ITravelApiService {
