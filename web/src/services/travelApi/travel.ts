@@ -1,11 +1,11 @@
 import { BaseErrorResponse, CalculateTotalOutputResponse } from "@/types";
 import { ApiResponse, apiServiceAdapter } from "../adapter";
 import type { CalculateTravelTotalOutputRequest } from "./types/request";
-import type { GetAllMotorFuelSourcesResponse } from "./types/response";
+import type { ListAllVehicleFuelSourcesResponse } from "./types/response";
 
 interface ITravelApiService {
-  getAllMotorFuelSources(): Promise<
-    ApiResponse<GetAllMotorFuelSourcesResponse, BaseErrorResponse>
+  getAllVehicleFuelSources(): Promise<
+    ApiResponse<ListAllVehicleFuelSourcesResponse, BaseErrorResponse>
   >;
   calculateTravelTotalOutput(
     payload: CalculateTravelTotalOutputRequest
@@ -15,10 +15,10 @@ interface ITravelApiService {
 export class TravelApiService implements ITravelApiService {
   private readonly base_url = "/travel";
 
-  public async getAllMotorFuelSources() {
+  public async getAllVehicleFuelSources() {
     const url = this.base_url + "/sources";
     return apiServiceAdapter.get<
-      GetAllMotorFuelSourcesResponse,
+      ListAllVehicleFuelSourcesResponse,
       BaseErrorResponse
     >(url);
   }

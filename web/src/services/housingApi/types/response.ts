@@ -1,5 +1,5 @@
 import { EGridSubRegion, FuelSource } from "@/types";
 
-export type GetAllHeatFuelSourcesResponse = FuelSource[];
+export type ListAllHeatFuelSourcesResponse = FuelSource[];
 
-export type GetAllSubRegionGridsResponse = EGridSubRegion[];
+export type ListAllSubRegionGridsResponse = EGridSubRegion[];

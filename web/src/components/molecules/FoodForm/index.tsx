@@ -1,11 +1,36 @@
 import { FormItem } from "@/components/atoms";
-import { Col, Input, Row, Select } from "antd";
+import { useFootprintForm } from "@/context";
+import { useListAllFoods, useListAllServingsByFoodId } from "@/useCases";
+import { Col, Form, Input, Row, Select } from "antd";
 import { NamePath } from "antd/es/form/interface";
+import { useEffect } from "react";
 import { CustomInputNumber } from "./styles";
 
 const baseFormItemName: NamePath = ["food"];
 
+const { useWatch } = Form;
+
 export function FoodForm() {
+  const form = useFootprintForm();
+
+  const foodId = useWatch([...baseFormItemName, "food"], form);
+
+  useEffect(() => {
+    form.setFieldValue(["food", "serving"], undefined);
+  }, [foodId]);
+
+  const {
+    data: foods,
+    isLoading: isGettingFoods,
+    isError: errorGettingFoods,
+  } = useListAllFoods();
+
+  const {
+    data: servings,
+    isLoading: isGettingServings,
+    isError: errorGettingServings,
+  } = useListAllServingsByFoodId(foodId);
+
   return (
     <Row justify="center">
       <Col xs={24}>
@@ -14,7 +39,12 @@ export function FoodForm() {
             <FormItem label="Food" name={[...baseFormItemName, "food"]}>
               <Select
                 placeholder="Select a food"
-                options={[{ value: "teste", title: "teste" }]}
+                options={foods?.map(({ id, name }) => ({
+                  label: name,
+                  value: id,
+                }))}
+                disabled={errorGettingFoods || (foods && foods.length === 0)}
+                loading={isGettingFoods}
               />
             </FormItem>
           </Col>
@@ -24,7 +54,16 @@ export function FoodForm() {
             <FormItem label="Serving" name={[...baseFormItemName, "serving"]}>
               <Select
                 placeholder="Select a serving"
-                options={[{ value: "teste", title: "teste" }]}
+                options={servings?.map(({ id, name }) => ({
+                  label: name,
+                  value: id,
+                }))}
+                disabled={
+                  errorGettingServings ||
+                  !servings ||
+                  (servings && servings.length === 0)
+                }
+                loading={isGettingServings}
               />
             </FormItem>
           </Col>

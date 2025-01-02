@@ -1,10 +1,11 @@
 import { QueryKey } from "@tanstack/react-query";
 
 enum QueryKeysEnum {
-  useGetAllFoods = "useGetAllFoods",
+  useListAllFoods = "useListAllFoods",
   useListAllSubRegionGrids = "useListAllSubRegionGrids",
   useListAllHeatFuelSources = "useListAllHeatFuelSources",
-  useGetAllServingsByFoodId = "useGetAllServingsByFoodId",
+  useListAllServingsByFoodId = "useListAllServingsByFoodId",
+  useListAllVehiclesFuelSources = "useListAllVehiclesFuelSources",
 }
 
 type QueryKeyList = {
@@ -12,8 +13,9 @@ type QueryKeyList = {
 };
 
 export const queryKeys: QueryKeyList = {
-  useGetAllFoods: ["foods-list"],
-  useGetAllServingsByFoodId: ["servings-by-food-id"],
+  useListAllFoods: ["foods-list"],
   useListAllSubRegionGrids: ["sub-region-grids-list"],
   useListAllHeatFuelSources: ["heat-fuel-sources-list"],
+  useListAllServingsByFoodId: ["servings-by-food-id-list"],
+  useListAllVehiclesFuelSources: ["vehicle-fuel-sources-list"],
 };

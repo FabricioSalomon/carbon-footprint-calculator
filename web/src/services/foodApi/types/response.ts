@@ -1,5 +1,5 @@
 import { FoodData, Serving } from "@/types";
 
-export type GetAllFoodsResponse = FoodData[];
+export type ListAllFoodsResponse = FoodData[];
 
-export type GetAllServingsByFoodIdResponse = Serving[];
+export type ListAllServingsByFoodIdResponse = Serving[];

@@ -6,6 +6,7 @@ import { Col, Input, Row, Select } from "antd";
 import { NamePath } from "antd/es/form/interface";
 import { useState } from "react";
 import { Container, CustomCol, CustomInputNumber } from "./styles";
+import { useListAllVehiclesFuelSources } from "@/useCases/useListAllVehiclesFuelSources";
 
 interface TravelFormProps {
   initialValue: TravelFields[];
@@ -17,6 +18,12 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
   const form = useFootprintForm();
   const [travelInputs, setTravelInputs] =
     useState<TravelFields[]>(initialValue);
+
+  const {
+    data: vehicleFuels,
+    isLoading: isGettingFuels,
+    isError: errorGettingFuels,
+  } = useListAllVehiclesFuelSources();
 
   function handleFieldChange(
     fieldName: keyof TravelFields,
@@ -104,7 +111,15 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
                       onChange={(value) =>
                         handleFieldChange("fuel", value, index)
                       }
-                      options={[{ value: "teste", title: "teste" }]}
+                      options={vehicleFuels?.map(({ id, name }) => ({
+                        label: name,
+                        value: id,
+                      }))}
+                      disabled={
+                        errorGettingFuels ||
+                        (vehicleFuels && vehicleFuels.length === 0)
+                      }
+                      loading={isGettingFuels}
                     />
                   </FormItem>
                 </Col>

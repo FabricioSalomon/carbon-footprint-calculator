@@ -6,6 +6,7 @@ import { Col, Input, Row, Select } from "antd";
 import { NamePath } from "antd/es/form/interface";
 import { useState } from "react";
 import { Container, CustomCol, CustomInputNumber } from "./styles";
+import { useListAllHeatFuelSources } from "@/useCases";
 
 interface HeatFormProps {
   initialValue: HeatFields[];
@@ -16,6 +17,12 @@ const baseFormItemName: NamePath = ["housing", "heat"];
 export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
   const form = useFootprintForm();
   const [heatInputs, setHeatInputs] = useState<HeatFields[]>(initialValue);
+
+  const {
+    data: heatFuels,
+    isLoading: isGettingFuels,
+    isError: errorGettingFuels,
+  } = useListAllHeatFuelSources();
 
   function handleFieldChange(
     fieldName: keyof HeatFields,
@@ -108,7 +115,15 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
                       onChange={(value) =>
                         handleFieldChange("fuelSource", value, index)
                       }
-                      options={[{ value: "teste", title: "teste" }]}
+                      options={heatFuels?.map(({ id, name }) => ({
+                        label: name,
+                        value: id,
+                      }))}
+                      disabled={
+                        errorGettingFuels ||
+                        (heatFuels && heatFuels.length === 0)
+                      }
+                      loading={isGettingFuels}
                     />
                   </FormItem>
                 </Col>

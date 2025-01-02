@@ -1,17 +1,17 @@
-import { queryKeys } from "../queryKeys";
+import { ListAllSubRegionGridsResponse, housingApi } from "@/services";
+import { ApiError } from "@/services/adapter/api/types";
 import { BaseErrorResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { ApiError } from "@/services/adapter/api/types";
-import { GetAllSubRegionGridsResponse, housingApi } from "@/services";
+import { queryKeys } from "../queryKeys";
 
-async function listAllSubRegionGrids(): Promise<GetAllSubRegionGridsResponse> {
+async function listAllSubRegionGrids(): Promise<ListAllSubRegionGridsResponse> {
   const { data } = await housingApi.getAllSubRegionGrids();
   return data;
 }
 
 export function useListAllSubRegionGrids() {
   const queryKey = queryKeys.useListAllSubRegionGrids;
-  return useQuery<GetAllSubRegionGridsResponse, ApiError<BaseErrorResponse>>({
+  return useQuery<ListAllSubRegionGridsResponse, ApiError<BaseErrorResponse>>({
     queryKey,
     queryFn: () => listAllSubRegionGrids(),
   });

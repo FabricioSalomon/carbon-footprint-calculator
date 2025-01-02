@@ -6,18 +6,18 @@ import type {
   CalculateWasteTotalOutputRequest,
 } from "./types/request";
 import type {
-  GetAllHeatFuelSourcesResponse,
-  GetAllSubRegionGridsResponse,
+  ListAllHeatFuelSourcesResponse,
+  ListAllSubRegionGridsResponse,
 } from "./types/response";
 
 type HousingResponse<T> = ApiResponse<T, BaseErrorResponse>;
 
 interface IHousingApiService {
   getAllHeatFuelSources(): Promise<
-    HousingResponse<GetAllHeatFuelSourcesResponse>
+    HousingResponse<ListAllHeatFuelSourcesResponse>
   >;
   getAllSubRegionGrids(): Promise<
-    HousingResponse<GetAllSubRegionGridsResponse>
+    HousingResponse<ListAllSubRegionGridsResponse>
   >;
   calculateHeatTotalOutput(
     payload: CalculateHeatTotalOutputRequest
@@ -36,7 +36,7 @@ export class HousingApiService implements IHousingApiService {
   public async getAllHeatFuelSources() {
     const url = this.base_url + "/heat/sources";
     return apiServiceAdapter.get<
-      GetAllHeatFuelSourcesResponse,
+      ListAllHeatFuelSourcesResponse,
       BaseErrorResponse
     >(url);
   }
@@ -44,7 +44,7 @@ export class HousingApiService implements IHousingApiService {
   public async getAllSubRegionGrids() {
     const url = this.base_url + "/energy/grids";
     return apiServiceAdapter.get<
-      GetAllSubRegionGridsResponse,
+      ListAllSubRegionGridsResponse,
       BaseErrorResponse
     >(url);
   }
