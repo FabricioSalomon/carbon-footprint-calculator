@@ -1,3 +1,4 @@
+import { FatSecretApiRepository } from "@/repositories";
 import {
   IListServingsByFoodIdService,
   ListServingsByFoodIdService,
@@ -13,28 +14,19 @@ export class ListServingsByFoodIdController
   extends ErrorHandler
   implements IListServingsByFoodIdController
 {
-  private service: IListServingsByFoodIdService;
+  private readonly service: IListServingsByFoodIdService;
   constructor() {
     super();
-    this.service = new ListServingsByFoodIdService();
+    const fatSecretApi = new FatSecretApiRepository();
+    this.service = new ListServingsByFoodIdService(fatSecretApi);
   }
 
   invoke = async (req: Request, res: Response) => {
-    //     const FOOD_ID = 1641;
-    //     const FORMAT = "json";
-    //     const URL = "https://platform.fatsecret.com/rest/food/v4";
-    //     const response = await axios.get(URL, {
-    //       params: {
-    //         food_id: FOOD_ID,
-    //         format: FORMAT,
-    //       },
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${req.headers["access_token"]}`,
-    //       },
-    //     });
-    //     return response.data;
     try {
+      const food_id = Number(req.query.food_id as string);
+      const token = req.headers.access_token as string;
+      const servings = await this.service.invoke(food_id, token);
+      res.status(200).json(servings);
     } catch (error: unknown) {
       const { reason, status, metadata } = this.throwError(error);
       res.status(status).json({

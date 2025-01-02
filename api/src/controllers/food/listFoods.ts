@@ -3,7 +3,7 @@ import { ErrorHandler } from "@/utils";
 import { Request, Response } from "express";
 
 interface IListFoodsController {
-  invoke(req: Request, res: Response): Promise<void>;
+  invoke(req: Request, res: Response): void;
 }
 
 export class ListFoodsController
@@ -16,9 +16,9 @@ export class ListFoodsController
     this.service = new ListFoodsService();
   }
 
-  invoke = async (req: Request, res: Response) => {
+  invoke = (req: Request, res: Response) => {
     try {
-      const fuel_sources = await this.service.invoke();
+      const fuel_sources = this.service.invoke();
 
       res.status(200).json(fuel_sources);
     } catch (error: unknown) {
