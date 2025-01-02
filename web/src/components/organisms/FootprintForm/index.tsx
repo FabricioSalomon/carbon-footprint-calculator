@@ -97,7 +97,7 @@ export function FootprintForm() {
           </Col>
         </Row>
       </Col>
-      <Col xs={20}>
+      <Col xs={20} md={16} lg={12}>
         <Form
           form={form}
           name="footprint"

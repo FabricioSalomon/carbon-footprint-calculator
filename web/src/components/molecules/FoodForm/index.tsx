@@ -32,7 +32,7 @@ export function FoodForm() {
         <Row justify="space-between" gutter={[0, 16]}>
           <Col xs={24} md={12}>
             <FormItem
-              label="Consumption (oz)"
+              label="Serving quantity"
               name={[...baseFormItemName, "consumption"]}
             >
               <CustomInputNumber placeholder="Enter your consumption" />
