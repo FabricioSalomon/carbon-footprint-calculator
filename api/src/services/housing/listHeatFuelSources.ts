@@ -8,7 +8,7 @@ export interface IListHeatFuelSourcesService {
 }
 
 export class ListHeatFuelSourcesService implements IListHeatFuelSourcesService {
-  invoke(): FuelSource[] {
+  invoke() {
     const mapped_fuels = heat_fuels.map(({ id, name }) => ({
       id,
       name,

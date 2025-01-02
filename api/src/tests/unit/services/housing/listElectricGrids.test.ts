@@ -1,22 +1,22 @@
 import {
-  IListHeatFuelSourcesService,
-  ListHeatFuelSourcesService,
+  IListElectricGridsService,
+  ListElectricGridsService,
 } from "@/services";
 import { jest } from "@jest/globals";
 
-describe("[ListHeatFuelSourcesService]", () => {
-  let service: IListHeatFuelSourcesService;
+describe("[ListElectricGridsService]", () => {
+  let service: IListElectricGridsService;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   beforeAll(() => {
-    service = new ListHeatFuelSourcesService();
+    service = new ListElectricGridsService();
   });
 
   describe("[invoke]", () => {
-    it("should return all heat fuel sources", () => {
+    it("should return all electric grids", () => {
       const response = service.invoke();
 
       const result = expect.arrayContaining([
