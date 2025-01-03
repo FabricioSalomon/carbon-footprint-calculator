@@ -1,6 +1,6 @@
 import { ListServingsByFoodIdController } from "@/controllers";
 import { ValidationMiddleware } from "@/middlewares";
-import { listServingsByFoodIdSchema } from "@/schemas/food";
+import { listServingsByFoodIdSchema } from "@/schemas";
 import { Router } from "express";
 
 const validation = new ValidationMiddleware();

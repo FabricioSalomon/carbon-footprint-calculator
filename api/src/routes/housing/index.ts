@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { heatRouter } from "./heat";
 import { electricityRouter } from "./electricity";
+import { heatRouter } from "./heat";
+import { wasteRouter } from "./waste";
 
 const router = Router();
 
 router.use("/heat", heatRouter);
-router.use("/electricity", electricityRouter);
-router.use("/waste", heatRouter);
+router.use("/energy", electricityRouter);
+router.use("/waste", wasteRouter);
 
 export { router as housingRouter };
