@@ -77,6 +77,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
                       InputNumber: {
                         colorText: theme.typography.colors.black,
                       },
+                      Skeleton: {
+                        gradientFromColor: theme.colors.primary,
+                        gradientToColor: theme.colors.tertiary,
+                      },
                     },
                     token: {
                       fontSize: 16,
