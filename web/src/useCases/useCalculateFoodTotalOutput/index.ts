@@ -18,7 +18,7 @@ export function useCalculateFoodTotalOutput() {
   >({
     mutationFn: (payload) => calculate(payload),
     onError: (error) => {
-      notification.success({
+      notification.error({
         message: error.response?.data.reason ?? "Algo deu errado.",
       });
     },

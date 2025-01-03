@@ -1,5 +1,5 @@
 export type CalculateFoodTotalOutputRequest = {
-  food_id: string;
-  serving_id: string;
+  food_id: number;
+  serving_id: number;
   consumption: number;
 };
