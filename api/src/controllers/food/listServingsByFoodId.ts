@@ -17,8 +17,8 @@ export class ListServingsByFoodIdController
   private readonly service: IListServingsByFoodIdService;
   constructor() {
     super();
-    const fatSecretApi = new FatSecretApiRepository();
-    this.service = new ListServingsByFoodIdService(fatSecretApi);
+    const fat_secret_api = new FatSecretApiRepository();
+    this.service = new ListServingsByFoodIdService(fat_secret_api);
   }
 
   invoke = async (req: Request, res: Response) => {
