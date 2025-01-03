@@ -1,4 +1,4 @@
-export type Grids = {
+export type Grid = {
   id: number;
   arconym: string;
   name: string;

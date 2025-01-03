@@ -1,12 +1,13 @@
 import axios from "axios";
+import "dotenv/config";
 import type { NextFunction, Request, Response } from "express";
 
 export class FoodMiddleware {
   auth = async (req: Request, res: Response, next: NextFunction) => {
-    const YOUR_CLIENT_ID = "a8a1dff4e0914ed0bbd9d62e93879e6e";
-    const YOUR_CLIENT_SECRET = "7d460db342da4984b9b630ef846a8bb4";
+    const FAT_SECRET_ID = process.env.FAT_SECRET_ID ?? "";
+    const FAT_SECRET_SECRET = process.env.FAT_SECRET_SECRET ?? "";
     const token = await axios.post(
-      "https://oauth.fatsecret.com/connect/token",
+      process.env.FAT_SECRET_FOOD_ID_URL ?? "",
       new URLSearchParams({
         grant_type: "client_credentials",
         scope: "basic",
@@ -16,8 +17,8 @@ export class FoodMiddleware {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         auth: {
-          username: YOUR_CLIENT_ID,
-          password: YOUR_CLIENT_SECRET,
+          username: FAT_SECRET_ID,
+          password: FAT_SECRET_SECRET,
         },
       }
     );

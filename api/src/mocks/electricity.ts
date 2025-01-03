@@ -1,6 +1,6 @@
-import { Grids } from "@/models";
+import { Grid } from "@/models";
 
-export const grids: Grids[] = [
+export const grids: Grid[] = [
   {
     id: 0,
     arconym: "AKGD",
