@@ -7,7 +7,7 @@ import {
 } from "@/types";
 import { ErrorHandler } from "./errorHandler";
 
-interface IUnitConverter {
+export interface IUnitConverter {
   convert(payload: Convert): number;
 }
 

@@ -1,6 +1,6 @@
 import { BaseError } from "@/types";
 
-interface IErrorHandler {
+export interface IErrorHandler {
   throwError(error: unknown): BaseError;
 }
 
