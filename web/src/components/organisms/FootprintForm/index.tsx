@@ -65,7 +65,7 @@ export function FootprintForm() {
       },
     },
     food: {
-      food: undefined,
+      foodId: undefined,
       consumption: undefined,
       serving: undefined,
       totalOutput: undefined,
@@ -106,7 +106,7 @@ export function FootprintForm() {
             width: "100%",
           }}
         >
-          <Row justify="center">
+          <Row justify="center" gutter={[0, 64]}>
             <Col xs={24}>
               <Row justify="center" gutter={[0, 30]}>
                 <Col xs={24}>

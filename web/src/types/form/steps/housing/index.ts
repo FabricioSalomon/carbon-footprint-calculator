@@ -1,7 +1,7 @@
 export type Heat = {
   index: number;
   consumption: number;
-  fuelSource: string;
+  fuelSource: number;
   totalOutput: number;
 };
 
@@ -11,7 +11,7 @@ export type HeatFields = Partial<Heat> & {
 
 export type Electricity = {
   consumption: number;
-  eGridSubRegion: string;
+  eGridSubRegion: number;
   totalOutput: number;
 };
 
@@ -31,8 +31,8 @@ export type Housing = {
 };
 
 export type Food = {
-  food: string;
-  serving: string;
+  foodId: number;
+  serving: number;
   consumption: number;
   totalOutput: number;
 };
@@ -40,7 +40,7 @@ export type Food = {
 export type FoodFields = Partial<Food>;
 
 export type Travel = {
-  fuel: string;
+  fuel: number;
   index: number;
   distance: number;
   consumption: number;

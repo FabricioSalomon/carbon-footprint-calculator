@@ -1,12 +1,16 @@
 import { CustomButton, FormItem } from "@/components/atoms";
 import { useFootprintForm } from "@/context";
-import { HeatFields } from "@/types";
+import { Heat, HeatFields } from "@/types";
+import {
+  useCalculateHeatTotalOutput,
+  useListAllHeatFuelSources,
+} from "@/useCases";
 import { DeleteOutlined } from "@ant-design/icons";
-import { Col, Input, Row, Select } from "antd";
+import { Col, Input, Row, Select, Skeleton } from "antd";
 import { NamePath } from "antd/es/form/interface";
+import { debounce } from "lodash";
 import { useState } from "react";
 import { Container, CustomCol, CustomInputNumber } from "./styles";
-import { useListAllHeatFuelSources } from "@/useCases";
 
 interface HeatFormProps {
   initialValue: HeatFields[];
@@ -17,6 +21,8 @@ const baseFormItemName: NamePath = ["housing", "heat"];
 export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
   const form = useFootprintForm();
   const [heatInputs, setHeatInputs] = useState<HeatFields[]>(initialValue);
+
+  const { mutateAsync: calculate, isPending } = useCalculateHeatTotalOutput();
 
   const {
     data: heatFuels,
@@ -32,38 +38,62 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
     const items: HeatFields[] = form.getFieldValue(baseFormItemName) || [];
 
     const currentItem = items[index];
-    if (fieldName === "fuelSource") {
-      currentItem.fuelSource = value as string;
-    } else {
-      currentItem[fieldName] = value as number;
+    currentItem[fieldName] = value as number;
+
+    if (
+      currentItem.fuelSource !== undefined &&
+      currentItem.fuelSource >= 0 &&
+      currentItem.consumption !== undefined
+    ) {
+      debounceCalculate(currentItem, items, index);
     }
+  }
 
-    // Update display value if both fields are filled
-    if (currentItem.fuelSource && currentItem.consumption !== undefined) {
-      //  items[index].totalOutput =
-    }
+  const debounceCalculate = debounce(
+    async (fields: HeatFields, items: HeatFields[], index: number) => {
+      if (hasAllFields(fields)) {
+        const { totalOutput } = await calculate({
+          consumption: fields.consumption,
+          fuel_source_id: fields.fuelSource,
+        });
 
-    form.setFieldsValue({
-      housing: {
-        heat: items,
-      },
-    });
+        if (totalOutput >= 0) {
+          items[index].totalOutput = totalOutput;
+        }
 
-    if (shouldAddNewEmptyInputs(currentItem, index, items)) {
-      items.push({
-        index: items.length,
-        fuelSource: undefined,
-        consumption: undefined,
-        totalOutput: undefined,
-      });
+        form.setFieldsValue({
+          housing: {
+            heat: items,
+          },
+        });
+      }
 
-      form.setFieldsValue({
-        housing: {
-          heat: items,
-        },
-      });
-      setHeatInputs(items);
-    }
+      if (shouldAddNewEmptyInputs(fields, index, items)) {
+        items.push({
+          index: items.length,
+          fuelSource: undefined,
+          consumption: undefined,
+          totalOutput: undefined,
+        });
+
+        form.setFieldsValue({
+          housing: {
+            heat: items,
+          },
+        });
+        setHeatInputs(items);
+      }
+    },
+    2000
+  );
+
+  function hasAllFields(fields: Partial<Heat>): fields is Heat {
+    return (
+      fields.consumption !== undefined &&
+      fields.consumption > 0 &&
+      fields.fuelSource !== undefined &&
+      fields.fuelSource >= 0
+    );
   }
 
   function shouldAddNewEmptyInputs(
@@ -72,7 +102,8 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
     items: HeatFields[]
   ): boolean {
     return (
-      !!currentItem.fuelSource &&
+      currentItem.fuelSource !== undefined &&
+      currentItem.fuelSource >= 0 &&
       currentItem.consumption !== undefined &&
       index === items.length - 1
     );
@@ -110,21 +141,28 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
                     label="Fuel"
                     name={[...baseFormItemName, index, "fuelSource"]}
                   >
-                    <Select
-                      placeholder="Select a fuel"
-                      onChange={(value) =>
-                        handleFieldChange("fuelSource", value, index)
-                      }
-                      options={heatFuels?.map(({ id, name }) => ({
-                        label: name,
-                        value: id,
-                      }))}
-                      disabled={
-                        errorGettingFuels ||
-                        (heatFuels && heatFuels.length === 0)
-                      }
-                      loading={isGettingFuels}
-                    />
+                    {isGettingFuels ? (
+                      <Skeleton.Input size="small" block active />
+                    ) : (
+                      <Select
+                        allowClear
+                        showSearch
+                        optionFilterProp="label"
+                        placeholder="Select a fuel"
+                        onChange={(value) =>
+                          handleFieldChange("fuelSource", value, index)
+                        }
+                        options={heatFuels?.map(({ id, name }) => ({
+                          label: name,
+                          value: id,
+                        }))}
+                        disabled={
+                          errorGettingFuels ||
+                          !heatFuels ||
+                          (heatFuels && heatFuels.length === 0)
+                        }
+                      />
+                    )}
                   </FormItem>
                 </Col>
               </Row>
@@ -147,7 +185,11 @@ export function HeatForm({ initialValue }: Readonly<HeatFormProps>) {
                     label="Total (kgCO2e/yr)"
                     name={[...baseFormItemName, index, "totalOutput"]}
                   >
-                    <Input disabled readOnly />
+                    {isPending ? (
+                      <Skeleton.Input size="small" block active />
+                    ) : (
+                      <Input readOnly />
+                    )}
                   </FormItem>
                 </CustomCol>
               </Row>

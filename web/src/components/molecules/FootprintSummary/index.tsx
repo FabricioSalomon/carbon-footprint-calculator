@@ -16,10 +16,9 @@ export function FootprintSummary() {
   const wasteOutput = formFields.housing.waste?.totalOutput ?? 0;
   const foodOutput = formFields.food.totalOutput ?? 0;
   const travelOutput =
-    formFields.travel.reduce(
-      (prev, curr) => prev + (curr.totalOutput ?? 0),
-      0
-    ) ?? 0;
+    formFields.travel
+      .filter(({ totalOutput }) => !!totalOutput && totalOutput > 0)
+      .reduce((prev, curr) => prev + (curr.totalOutput ?? 0), 0) ?? 0;
   const totalEnergyOutput =
     heatOutput + electricityOutput + wasteOutput + foodOutput + travelOutput;
 
@@ -36,43 +35,56 @@ export function FootprintSummary() {
           back and filling out some informations?
         </Text>
       ) : null}
-      {heatOutput > 0 || electricityOutput > 0 || wasteOutput > 0 ? (
+      {totalEnergyOutput > 0 ? (
         <Col xs={24}>
           <Row justify="space-between" align="middle">
             <Col xs={12}>
-              <Subtitle>Housing</Subtitle>
+              <Subtitle>Total</Subtitle>
+            </Col>
+            <Col>
+              <Text weight="bolder">{+totalEnergyOutput.toFixed(2)}</Text>
+              <Text> kgCO2e/yr</Text>
+            </Col>
+          </Row>
+        </Col>
+      ) : null}
+      {heatOutput > 0 || electricityOutput > 0 || wasteOutput > 0 ? (
+        <Col xs={20}>
+          <Row justify="space-between" align="middle">
+            <Col xs={12}>
+              <Text weight="bolder">Housing</Text>
             </Col>
             <Col>
               <Text weight="bolder">
-                {heatOutput + electricityOutput + wasteOutput}
+                {+(heatOutput + electricityOutput + wasteOutput).toFixed(2)}
               </Text>
-              <Text>kgCO2e/yr</Text>
+              <Text> kgCO2e/yr</Text>
             </Col>
           </Row>
         </Col>
       ) : null}
       {foodOutput > 0 ? (
-        <Col xs={24}>
+        <Col xs={20}>
           <Row justify="space-between" align="middle">
             <Col xs={12}>
-              <Subtitle>Food</Subtitle>
+              <Text weight="bolder">Food</Text>
             </Col>
             <Col>
               <Text weight="bolder">{foodOutput}</Text>
-              <Text>kgCO2e/yr</Text>
+              <Text> kgCO2e/yr</Text>
             </Col>
           </Row>
         </Col>
       ) : null}
       {travelOutput > 0 ? (
-        <Col xs={24}>
+        <Col xs={20}>
           <Row justify="space-between" align="middle">
             <Col xs={12}>
-              <Subtitle>Travel</Subtitle>
+              <Text weight="bolder">Travel</Text>
             </Col>
             <Col>
               <Text weight="bolder">{travelOutput}</Text>
-              <Text>kgCO2e/yr</Text>
+              <Text> kgCO2e/yr</Text>
             </Col>
           </Row>
         </Col>

@@ -1,12 +1,16 @@
 import { CustomButton, FormItem } from "@/components/atoms";
 import { useFootprintForm } from "@/context";
-import { TravelFields } from "@/types";
+import { Travel, TravelFields } from "@/types";
+import {
+  useCalculateTravelTotalOutput,
+  useListAllVehiclesFuelSources,
+} from "@/useCases";
 import { DeleteOutlined } from "@ant-design/icons";
-import { Col, Input, Row, Select } from "antd";
+import { Col, Input, Row, Select, Skeleton } from "antd";
 import { NamePath } from "antd/es/form/interface";
+import { debounce } from "lodash";
 import { useState } from "react";
 import { Container, CustomCol, CustomInputNumber } from "./styles";
-import { useListAllVehiclesFuelSources } from "@/useCases/useListAllVehiclesFuelSources";
 
 interface TravelFormProps {
   initialValue: TravelFields[];
@@ -18,6 +22,8 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
   const form = useFootprintForm();
   const [travelInputs, setTravelInputs] =
     useState<TravelFields[]>(initialValue);
+
+  const { mutateAsync: calculate, isPending } = useCalculateTravelTotalOutput();
 
   const {
     data: vehicleFuels,
@@ -33,34 +39,62 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
     const items: TravelFields[] = form.getFieldValue(baseFormItemName) || [];
 
     const currentItem = items[index];
-    if (fieldName === "fuel") {
-      currentItem.fuel = value as string;
-    } else {
-      currentItem[fieldName] = value as number;
-    }
+    currentItem[fieldName] = value as number;
 
     // Update display value if both fields are filled
-    if (currentItem.fuel && currentItem.consumption !== undefined) {
-      //  items[index].totalOutput =
+    if (
+      currentItem.fuel !== undefined &&
+      currentItem.fuel >= 0 &&
+      currentItem.consumption !== undefined
+    ) {
+      debounceCalculate(currentItem, items, index);
     }
+  }
 
-    form.setFieldsValue({
-      travel: items,
-    });
+  const debounceCalculate = debounce(
+    async (fields: TravelFields, items: TravelFields[], index: number) => {
+      if (hasAllFields(fields)) {
+        const { totalOutput } = await calculate({
+          consumption: fields.consumption,
+          fuel_id: fields.fuel,
+          distance: fields.distance,
+        });
 
-    if (shouldAddNewEmptyInputs(currentItem, index, items)) {
-      items.push({
-        index: items.length,
-        fuel: undefined,
-        consumption: undefined,
-        totalOutput: undefined,
-      });
+        if (totalOutput >= 0) {
+          items[index].totalOutput = totalOutput;
+        }
 
-      form.setFieldsValue({
-        travel: items,
-      });
-      setTravelInputs(items);
-    }
+        form.setFieldsValue({
+          travel: items,
+        });
+      }
+
+      if (shouldAddNewEmptyInputs(fields, index, items)) {
+        items.push({
+          fuel: undefined,
+          index: items.length,
+          consumption: undefined,
+          totalOutput: undefined,
+        });
+
+        form.setFieldsValue({
+          travel: items,
+        });
+        setTravelInputs(items);
+      }
+    },
+    2000
+  );
+
+  function hasAllFields(fields: Partial<Travel>): fields is Travel {
+    return (
+      fields.consumption !== undefined &&
+      fields.consumption > 0 &&
+      fields.distance !== undefined &&
+      fields.distance > 0 &&
+      fields.fuel !== undefined &&
+      fields.fuel >= 0
+    );
   }
 
   function shouldAddNewEmptyInputs(
@@ -69,7 +103,8 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
     items: TravelFields[]
   ): boolean {
     return (
-      !!currentItem.fuel &&
+      currentItem.fuel !== undefined &&
+      currentItem.fuel >= 0 &&
       currentItem.distance !== undefined &&
       currentItem.consumption !== undefined &&
       index === items.length - 1
@@ -106,21 +141,28 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
                     label="Fuel"
                     name={[...baseFormItemName, index, "fuel"]}
                   >
-                    <Select
-                      placeholder="Select a fuel"
-                      onChange={(value) =>
-                        handleFieldChange("fuel", value, index)
-                      }
-                      options={vehicleFuels?.map(({ id, name }) => ({
-                        label: name,
-                        value: id,
-                      }))}
-                      disabled={
-                        errorGettingFuels ||
-                        (vehicleFuels && vehicleFuels.length === 0)
-                      }
-                      loading={isGettingFuels}
-                    />
+                    {isGettingFuels ? (
+                      <Skeleton.Input size="small" block active />
+                    ) : (
+                      <Select
+                        allowClear
+                        showSearch
+                        optionFilterProp="label"
+                        placeholder="Select a fuel"
+                        onChange={(value) =>
+                          handleFieldChange("fuel", value, index)
+                        }
+                        options={vehicleFuels?.map(({ id, name }) => ({
+                          label: name,
+                          value: id,
+                        }))}
+                        disabled={
+                          errorGettingFuels ||
+                          !vehicleFuels ||
+                          (vehicleFuels && vehicleFuels.length === 0)
+                        }
+                      />
+                    )}
                   </FormItem>
                 </Col>
               </Row>
@@ -140,7 +182,7 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
                 </CustomCol>
                 <CustomCol xs={24} md={10}>
                   <FormItem
-                    label="Distance travelled (miles)"
+                    label="Daily distance travelled (miles)"
                     name={[...baseFormItemName, index, "distance"]}
                   >
                     <CustomInputNumber
@@ -158,7 +200,11 @@ export function TravelForm({ initialValue }: Readonly<TravelFormProps>) {
                     label="Total (kgCO2e/yr)"
                     name={[...baseFormItemName, index, "totalOutput"]}
                   >
-                    <Input disabled readOnly />
+                    {isPending ? (
+                      <Skeleton.Input size="small" block active />
+                    ) : (
+                      <Input readOnly />
+                    )}
                   </FormItem>
                 </CustomCol>
               </Row>

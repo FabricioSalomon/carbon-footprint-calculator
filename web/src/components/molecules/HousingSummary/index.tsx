@@ -17,7 +17,10 @@ export function HousingSummary() {
     if (heat) {
       const fields = heat.filter(
         (input) =>
-          !!input.totalOutput && !!input.consumption && !!input.fuelSource
+          !!input.totalOutput &&
+          !!input.consumption &&
+          input.fuelSource !== undefined &&
+          input.fuelSource >= 0
       );
       if (hasArrayFields(fields)) {
         return fields;
@@ -79,28 +82,34 @@ export function HousingSummary() {
           back and filling out the Housing Form information?
         </Text>
       ) : null}
-      {heat && heat.length > 0 ? (
+      {(heat && heat.length > 0) ||
+      (electricity && electricity.totalOutput > 0) ? (
         <Col xs={24}>
           <Row justify="space-between" align="middle">
             <Col xs={12}>
               <Subtitle>Energy</Subtitle>
             </Col>
             <Col>
-              <Text weight="bolder">{totalEnergyOutput}</Text>
-              <Text>kgCO2e/yr</Text>
+              <Text weight="bolder">{+totalEnergyOutput.toFixed(2)}</Text>
+              <Text> kgCO2e/yr</Text>
             </Col>
           </Row>
-          <Row justify="space-between" align="middle">
-            <Col xs={10}>
-              <Text weight="bolder">Heat</Text>
-            </Col>
-            <Col>
-              <Text weight="bolder">
-                {heat.reduce((prev, curr) => prev + (curr.totalOutput ?? 0), 0)}
-              </Text>
-              <Text>kgCO2e/yr</Text>
-            </Col>
-          </Row>
+          {heat ? (
+            <Row justify="space-between" align="middle">
+              <Col xs={10}>
+                <Text weight="bolder">Heat</Text>
+              </Col>
+              <Col>
+                <Text weight="bolder">
+                  {heat?.reduce(
+                    (prev, curr) => prev + (curr.totalOutput ?? 0),
+                    0
+                  )}
+                </Text>
+                <Text> kgCO2e/yr</Text>
+              </Col>
+            </Row>
+          ) : null}
           {electricity ? (
             <Row justify="space-between" align="middle">
               <Col xs={12}>
@@ -108,7 +117,7 @@ export function HousingSummary() {
               </Col>
               <Col>
                 <Text weight="bolder">{electricity.totalOutput}</Text>
-                <Text>kgCO2e/yr</Text>
+                <Text> kgCO2e/yr</Text>
               </Col>
             </Row>
           ) : null}
@@ -122,7 +131,7 @@ export function HousingSummary() {
             </Col>
             <Col>
               <Text weight="bolder">{waste.totalOutput}</Text>
-              <Text>kgCO2e/yr</Text>
+              <Text> kgCO2e/yr</Text>
             </Col>
           </Row>
         </Col>
