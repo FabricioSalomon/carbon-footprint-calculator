@@ -3,13 +3,18 @@ export enum FromEnum {
   OUNCES = "oz",
   POUNDS = "lb",
   SHORT_TON = "short ton",
+  GRAMS = "g",
+  KWH = "kWh",
+  METRIC_TON = "ton",
 }
 
 export enum ToEnum {
-  MM_BTU = "mmBtu",
+  MMBTU = "mmBtu",
   GRAMS = "g",
+  KILOGRAMS = "kg",
   SHORT_TON = "short ton",
   METRIC_TON = "ton",
+  MWH = "MWh",
 }
 
 export type FromOptionsMultiplier = {

@@ -1,4 +1,4 @@
-type Serving = {
+export type Serving = {
   serving_id: string;
   serving_description: string;
   serving_url: string;
@@ -24,11 +24,11 @@ type Serving = {
   iron: string;
 };
 
-type ServingObjects = {
+export type ServingObjects = {
   serving: Serving[];
 };
 
-type Food = {
+export type Food = {
   servings: ServingObjects;
 };
 
