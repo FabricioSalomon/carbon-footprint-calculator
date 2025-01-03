@@ -1,6 +1,6 @@
 import { CustomButton } from "@/components/atoms";
 import { useAppContext } from "@/context";
-import { FileAddFilled, HomeFilled, UserOutlined } from "@ant-design/icons";
+import { FileAddFilled, HomeFilled } from "@ant-design/icons";
 import { Col, Row } from "antd";
 import { useRouter } from "next/navigation";
 import { Container } from "./styles";
@@ -20,11 +20,6 @@ export function Footer() {
       key: 2,
       icon: <FileAddFilled />,
       url: "/form",
-    },
-    {
-      key: 3,
-      icon: <UserOutlined />,
-      url: "/profile",
     },
   ];
 
