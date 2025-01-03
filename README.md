@@ -46,9 +46,14 @@ yarn unit:test --coverage
 
 This will generate a folder called `coverage` inside `api`. It's possible to access the coverage interface. Just open the following file on your browser:
 
-
 ```bash
 /api/coverage/lcov-report/index.html
 ```
+
+## 4. FatSecret Api Integration
+
+To use the Food Section of the app, you need to add the tester's IP address to the whitelist configuration of the **FatSecret API**. This is a security measure required by FatSecret to ensure that only authorized users can access their data. If your IP address is not on the whitelist, you will encounter an error when trying to access the Food Section.
+
+Please make sure to contact the administrator or API manager to add the necessary IP address to the whitelist before using this feature.
 
 ---
